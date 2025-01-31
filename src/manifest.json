@@ -1,0 +1,17 @@
+{
+  "name": "TODO app name",
+  "short_name": "TODO app name",
+  "description": "TODO description",
+  "id": "?todo_app_name=202402221",
+  "dir": "auto",
+  "lang": "en-US",
+  "display": "standalone",
+  "start_url": "https://skedwards88.github.io/todo_app_name/",
+  "scope": "/todo_app_name/",
+  "background_color": "#373647",
+  "theme_color": "#373647",
+  "shortcuts": [],
+  "categories": ["games", "entertainment", "education"],
+  "icons": [],
+  "screenshots": []
+}
