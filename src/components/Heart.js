@@ -27,13 +27,6 @@ export default function Heart({setDisplay, appName, shareText, repoName, url}) {
         {`\n\n`}
         {<hr></hr>}
         {`\n`}
-        {`Thanks to the word frequency data sources attributed in `}
-        <a href="https://github.com/skedwards88/word_lists">
-          skedwards88/word_lists
-        </a>
-        {`.`}
-        {<hr></hr>}
-        {`\n`}
         <a href="./privacy.html">Privacy policy</a>
       </div>
       <button className="close" onClick={() => setDisplay("game")}>

@@ -5,6 +5,3 @@ PWA_Builder
 .env
 .env.test
 .DS_Store
-
-# TODO remove this:
-package-lock.json

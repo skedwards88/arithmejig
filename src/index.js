@@ -11,8 +11,8 @@ if (process.env.NODE_ENV !== "development" && "serviceWorker" in navigator) {
   const path =
     location.hostname === "localhost"
       ? "/service-worker.js"
-      : "/TODO-template-app/service-worker.js";
-  const scope = location.hostname === "localhost" ? "" : "/TODO-template-app/";
+      : "/arithmejig/service-worker.js";
+  const scope = location.hostname === "localhost" ? "" : "/arithmejig/";
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register(path, {scope: scope})
