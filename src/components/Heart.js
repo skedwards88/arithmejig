@@ -1,22 +1,9 @@
 import React from "react";
-import Share from "./Share";
 
-export default function Heart({setDisplay, appName, shareText, repoName, url}) {
+export default function Heart({setDisplay, repoName}) {
   return (
     <div className="App info">
-      <h1>{appName}</h1>
       <div className="infoText">
-        {"Like this game? Share it with your friends.\n\n"}
-        {<Share appName={appName} text={shareText} url={url}></Share>}
-        {`\n\n`}
-        {<hr></hr>}
-        {`\n`}
-        {`Want more games? Check `}
-        <a href="https://skedwards88.github.io/">these</a>
-        {` out. `}
-        {`\n\n`}
-        {<hr></hr>}
-        {`\n`}
         {"Feedback? "}
         <a
           href={`https://github.com/skedwards88/${repoName}/issues/new/choose`}
@@ -24,6 +11,14 @@ export default function Heart({setDisplay, appName, shareText, repoName, url}) {
           Open an issue
         </a>
         {" on GitHub or email SECTgames@gmail.com."}
+        {`\n\n`}
+        {<hr></hr>}
+        {`\n`}
+        {`Thanks to the word frequency data sources attributed in `}
+        <a href="https://github.com/skedwards88/word_lists">
+          skedwards88/word_lists
+        </a>
+        {`.`}
         {`\n\n`}
         {<hr></hr>}
         {`\n`}

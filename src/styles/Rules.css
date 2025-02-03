@@ -12,6 +12,23 @@
   align-items: center;
 }
 
+.rulesIcon {
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: calc(var(--default-font-size) * 0.75);
+  height: calc(var(--default-font-size) * 0.75);
+}
+
+/* What's new uses the rules styling, and this is used for what's new */
+button.rulesIcon {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
 #rulesHeader {
   grid-area: header;
 }

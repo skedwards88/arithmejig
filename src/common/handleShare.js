@@ -1,17 +1,17 @@
 import sendAnalytics from "./sendAnalytics";
 
-export function assembleShareLink({url, seed}) {
-  const fullUrl = seed ? `${url}?id=${seed}` : url;
+export function assembleShareLink({url, seed, query = "id"}) {
+  const fullUrl = seed ? `${url}?${query}=${seed}` : url;
   return fullUrl;
 }
 
-export function handleShare({appName, text, url, seed}) {
-  const fullUrl = assembleShareLink({url, seed});
+export function handleShare({appName, text, url, seed, query}) {
+  const fullUrl = assembleShareLink({url, seed, query});
 
   navigator
     .share({
-      title: {appName},
-      text: `${text}\n\n`,
+      title: appName,
+      text: `${text}\n`,
       url: fullUrl,
     })
     .then(() => console.log("Successful share"))
@@ -25,7 +25,7 @@ export function handleCopy({text, url, seed}) {
   const fullUrl = assembleShareLink({url, seed});
 
   try {
-    navigator.clipboard.writeText(`${text}\n\n${fullUrl}`);
+    navigator.clipboard.writeText(`${text}\n${fullUrl}`);
   } catch (error) {
     console.log("Error copying", error);
   }

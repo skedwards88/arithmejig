@@ -1,10 +1,17 @@
 
 ## For first deploy
 
+- remove word_list imports
+- remove/rename word/letter logic
+
+- replace the favicons
 - reenable the deploy workflow
 - in the GitHub Pages settings, specify that GitHub Pages is built from GitHub Actions
 - Add link etc to readme
 - Add link to repo home
+- what's new remove?
+- update rules
+- xlink between crossjig and this game
 
 ## `src/images`
 

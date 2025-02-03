@@ -2,54 +2,88 @@ import React from "react";
 import Game from "./Game";
 import Heart from "./Heart";
 import Rules from "./Rules";
+import ExtendedMenu from "./ExtendedMenu";
+import MoreGames from "./MoreGames";
 import Stats from "./Stats";
+import CustomCreation from "./CustomCreation";
+import CustomShare from "./CustomShare";
 import ControlBar from "./ControlBar";
+import FallbackInstall from "./FallbackInstall";
+import CustomError from "./CustomError";
+import WhatsNew from "./WhatsNew";
 import {
   handleAppInstalled,
   handleBeforeInstallPrompt,
 } from "../common/handleInstall";
 import Settings from "./Settings";
 import {gameInit} from "../logic/gameInit";
-import {gameReducer} from "../logic/gameReducer";
+import {customInit} from "../logic/customInit";
 import getDailySeed from "../common/getDailySeed";
-
-function parseUrlQuery() {
-  const searchParams = new URLSearchParams(document.location.search);
-  const query = searchParams.get("id");
-
-  // TODO-parse query. Example below
-  // The seed query consists of two parts: the seed and the min number of letters, separated by an underscore
-  let numLetters;
-  let seed;
-  if (query) {
-    [seed, numLetters] = query.split("_");
-    numLetters = parseInt(numLetters);
-  }
-
-  return [seed, numLetters];
-}
+import {getSeedFromDate} from "../common/getSeedFromDate";
+import {gameReducer} from "../logic/gameReducer";
+import {parseUrlQuery} from "../logic/parseUrlQuery";
+import {getInitialState} from "../common/getInitialState";
+import {hasVisitedSince} from "../common/hasVisitedSince";
+import {handleShare} from "../common/handleShare";
+import {convertGridToRepresentativeString} from "../logic/convertGridToRepresentativeString";
+import {getGridFromPieces} from "../logic/getGridFromPieces";
+import {pickRandomIntBetween} from "@skedwards88/word_logic";
+import {resizeGrid} from "../logic/resizeGrid";
 
 export default function App() {
-  // TODO enter the actual return values
-  const [seed, numLetters] = parseUrlQuery();
+  // If a query string was passed,
+  // parse it to get the data to regenerate the game described by the query string
+  const [isCustom, seed, numLetters] = parseUrlQuery();
 
-  // TODO enter value of the saved display state. If no daily challenge, remove daily logic.
-  const savedDisplay = JSON.parse(
-    localStorage.getItem("TODODisplaySavedStateName"),
+  // Determine when the player last visited the game
+  // This is used to determine whether to show the rules instead of the game
+  const hasVisitedEver = hasVisitedSince("arithmejigLastVisited", "20240429");
+
+  const savedHasSeenWhatsNew = JSON.parse(
+    localStorage.getItem("arithmejigHasSeenWhatsNew20240909"),
   );
+
+  const [hasSeenWhatsNew, setHasSeenWhatsNew] = React.useState(
+    savedHasSeenWhatsNew ?? false,
+  );
+
+  React.useEffect(() => {
+    window.localStorage.setItem(
+      "arithmejigHasSeenWhatsNew20240909",
+      JSON.stringify(hasSeenWhatsNew),
+    );
+  }, [hasSeenWhatsNew]);
+
+  const [lastVisited] = React.useState(getSeedFromDate());
+  React.useEffect(() => {
+    window.localStorage.setItem(
+      "arithmejigLastVisited",
+      JSON.stringify(lastVisited),
+    );
+  }, [lastVisited]);
+
+  // Determine what view to show the user
+  const savedDisplay = JSON.parse(localStorage.getItem("arithmejigDisplay"));
   const [display, setDisplay] = React.useState(
-    savedDisplay === "game" || savedDisplay === "daily" ? savedDisplay : "game",
+    getInitialState(savedDisplay, hasVisitedEver, hasSeenWhatsNew, isCustom),
   );
 
+  // Determine the opacity for the validity indicator
+  const savedValidityOpacity =
+    JSON.parse(localStorage.getItem("arithmejigValidityOpacity")) ?? 0.15;
+  const [validityOpacity, setValidityOpacity] =
+    React.useState(savedValidityOpacity);
+
+  // Set up states that will be used by the handleAppInstalled and handleBeforeInstallPrompt listeners
   const [installPromptEvent, setInstallPromptEvent] = React.useState();
   const [showInstallButton, setShowInstallButton] = React.useState(true);
 
-  // TODO update values passed to inits. If no daily challenge, remove daily logic.
   const [gameState, dispatchGameState] = React.useReducer(
     gameReducer,
     {
       seed,
       numLetters,
+      isCustom,
     },
     gameInit,
   );
@@ -60,21 +94,59 @@ export default function App() {
     gameInit,
   );
 
-  // TODO If no daily challenge, remove this.
-  const [, setLastOpened] = React.useState(Date.now());
+  const [customState, dispatchCustomState] = React.useReducer(
+    gameReducer,
+    {},
+    customInit,
+  );
 
-  // TODO If no daily challenge, remove this.
+  const [, setLastVisible] = React.useState(Date.now());
+
+  function handleCustomGeneration() {
+    // If there is nothing to share, display a message with errors
+    if (!customState.pieces.some((piece) => piece.boardTop >= 0)) {
+      throw new Error("Add some letters to the board first!");
+    }
+
+    // Validate the grid
+    // - The UI restricts the grid size, so don't need to validate that
+    // - Make sure all letters are connected
+    // - Make sure all horizontal and vertical words are known
+    const grid = getGridFromPieces({
+      pieces: customState.pieces,
+      gridSize: customState.gridSize,
+      solution: false,
+    });
+
+    const {gameIsSolved, reason} = {gameIsSolved: false, reason:"todo"} // todo implement this logic
+
+    // If the board is not valid, display a message with errors
+    if (!gameIsSolved) {
+      throw new Error(reason);
+    }
+
+    // Center and resize/pad the grid
+    // Convert the grid to a representative string
+    const resizedGrid = resizeGrid(grid);
+    const cipherShift = pickRandomIntBetween(5, 9);
+    const representativeString = convertGridToRepresentativeString(
+      resizedGrid,
+      cipherShift,
+    );
+
+    return representativeString;
+  }
+
   function handleVisibilityChange() {
     // If the visibility of the app changes to become visible,
     // update the state to force the app to re-render.
     // This is to help the daily challenge refresh if the app has
     // been open in the background since an earlier challenge.
     if (!document.hidden) {
-      setLastOpened(Date.now());
+      setLastVisible(Date.now());
     }
   }
 
-  // TODO If no daily challenge, remove this.
   React.useEffect(() => {
     // When the component is mounted, attach the visibility change event listener
     // (and remove the event listener when the component is unmounted).
@@ -96,7 +168,6 @@ export default function App() {
       );
 
     window.addEventListener("beforeinstallprompt", listener);
-
     return () => window.removeEventListener("beforeinstallprompt", listener);
   }, []);
 
@@ -111,40 +182,45 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
-    window.localStorage.setItem(
-      "TODODisplaySavedStateName",
-      JSON.stringify(display),
-    );
+    window.localStorage.setItem("arithmejigDisplay", JSON.stringify(display));
   }, [display]);
 
   React.useEffect(() => {
     window.localStorage.setItem(
-      "TODOGameSavedStateName",
-      JSON.stringify(gameState),
+      "arithmejigValidityOpacity",
+      JSON.stringify(validityOpacity),
     );
+  }, [validityOpacity]);
+
+  React.useEffect(() => {
+    window.localStorage.setItem("arithmejigState", JSON.stringify(gameState));
   }, [gameState]);
 
   React.useEffect(() => {
     window.localStorage.setItem(
-      "TODODailySavedStateName",
+      "dailyArithmejigState",
       JSON.stringify(dailyGameState),
     );
   }, [dailyGameState]);
 
+  React.useEffect(() => {
+    window.localStorage.setItem(
+      "arithmejigCustomCreation",
+      JSON.stringify(customState),
+    );
+  }, [customState]);
+
   switch (display) {
     case "rules":
-      return <Rules setDisplay={setDisplay}></Rules>;
+      return (
+        <Rules
+          setDisplay={setDisplay}
+          setHasSeenWhatsNew={setHasSeenWhatsNew}
+        ></Rules>
+      );
 
     case "heart":
-      return (
-        <Heart
-          setDisplay={setDisplay}
-          appName="TODO app name"
-          shareText="TODO share text"
-          repoName="TODO repo name"
-          url="TODO app url"
-        />
-      );
+      return <Heart setDisplay={setDisplay} repoName="arithmejig" />;
 
     case "settings":
       return (
@@ -152,13 +228,14 @@ export default function App() {
           setDisplay={setDisplay}
           dispatchGameState={dispatchGameState}
           gameState={gameState}
+          setValidityOpacity={setValidityOpacity}
+          originalValidityOpacity={validityOpacity}
         />
       );
 
-    // todo remove if no daily challenge
     case "daily":
       // force reinitialize the daily state if the day has changed
-      if (dailyGameState.seed != getDailySeed()) {
+      if (dailyGameState.seed != getDailySeed()[0]) {
         dailyDispatchGameState({
           action: "newGame",
           isDaily: true,
@@ -166,24 +243,22 @@ export default function App() {
         });
       }
       return (
-        <div className="App" id="todo-app-name">
+        <div className="App" id="arithmejig">
           <div id="exitDaily">
             <button
-              id="helpButton"
+              id="hintIcon"
               className="controlButton"
               disabled={dailyGameState.gameIsSolved}
               onClick={() => dailyDispatchGameState({action: "getHint"})}
             ></button>
-            <button id="exitDailyButton" onClick={() => setDisplay("game")}>
+            <button id="exitDailyIcon" onClick={() => setDisplay("game")}>
               Exit daily challenge
             </button>
           </div>
           <Game
             dispatchGameState={dailyDispatchGameState}
-            gameState={{
-              ...dailyGameState,
-              indicateValidity: gameState?.indicateValidity ?? false,
-            }}
+            gameState={dailyGameState}
+            validityOpacity={validityOpacity}
             setDisplay={setDisplay}
           ></Game>
         </div>
@@ -194,24 +269,138 @@ export default function App() {
         <Stats setDisplay={setDisplay} stats={dailyGameState.stats}></Stats>
       );
 
+    case "custom":
+      return (
+        <div className="App" id="arithmejig">
+          <div id="controls">
+            <button
+              id="playIcon"
+              className="controlButton"
+              onClick={() => {
+                let representativeString;
+                try {
+                  representativeString = handleCustomGeneration();
+                } catch (error) {
+                  const invalidReason = error.message;
+                  dispatchCustomState({
+                    action: "updateInvalidReason",
+                    invalidReason: invalidReason,
+                  });
+                  setDisplay("customError");
+                  return;
+                }
+
+                dispatchGameState({
+                  action: "playCustom",
+                  representativeString,
+                });
+                setDisplay("game");
+              }}
+            ></button>
+
+            <button
+              id="shareIcon"
+              className="controlButton"
+              onClick={() => {
+                let representativeString;
+                try {
+                  representativeString = handleCustomGeneration();
+                } catch (error) {
+                  const invalidReason = error.message;
+                  dispatchCustomState({
+                    action: "updateInvalidReason",
+                    invalidReason: invalidReason,
+                  });
+                  setDisplay("customError");
+                  return;
+                }
+
+                // Share (or show the link if sharing is not supported)
+                if (navigator.canShare) {
+                  handleShare({
+                    appName: "Arithmejig",
+                    text: "Try this custom arithmejig that I created!",
+                    url: "https://skedwards88.github.io/arithmejig",
+                    seed: `custom-${representativeString}`,
+                  });
+                } else {
+                  dispatchCustomState({
+                    action: "updateRepresentativeString",
+                    representativeString,
+                  });
+                  setDisplay("customShare");
+                }
+              }}
+            ></button>
+
+            <button id="exitCustomButton" onClick={() => setDisplay("game")}>
+              Exit creation
+            </button>
+          </div>
+          <CustomCreation
+            dispatchCustomState={dispatchCustomState}
+            validityOpacity={validityOpacity}
+            customState={customState}
+            setDisplay={setDisplay}
+          ></CustomCreation>
+        </div>
+      );
+
+    case "customError":
+      return (
+        <CustomError
+          invalidReason={customState.invalidReason}
+          dispatchCustomState={dispatchCustomState}
+          setDisplay={setDisplay}
+        ></CustomError>
+      );
+
+    case "customShare":
+      return (
+        <CustomShare
+          representativeString={customState.representativeString}
+          dispatchCustomState={dispatchCustomState}
+          setDisplay={setDisplay}
+        ></CustomShare>
+      );
+
+    case "moreGames":
+      return <MoreGames setDisplay={setDisplay}></MoreGames>;
+
+    case "fallbackInstall":
+      return <FallbackInstall setDisplay={setDisplay}></FallbackInstall>;
+
+    case "extendedMenu":
+      return (
+        <ExtendedMenu
+          setDisplay={setDisplay}
+          setInstallPromptEvent={setInstallPromptEvent}
+          showInstallButton={showInstallButton}
+          installPromptEvent={installPromptEvent}
+        ></ExtendedMenu>
+      );
+
+    case "whatsNew":
+      return (
+        <WhatsNew
+          setDisplay={setDisplay}
+          setHasSeenWhatsNew={setHasSeenWhatsNew}
+        ></WhatsNew>
+      );
+
     default:
       return (
-        <div className="App" id="todo-app-name">
+        <div className="App" id="arithmejig">
           <ControlBar
             setDisplay={setDisplay}
-            setInstallPromptEvent={setInstallPromptEvent}
-            showInstallButton={showInstallButton}
-            installPromptEvent={installPromptEvent}
             dispatchGameState={dispatchGameState}
             gameState={gameState}
             dailyIsSolved={dailyGameState.gameIsSolved}
-            appName={"TODO"}
-            shareText={"TODO"}
-            url={"TODO"}
           ></ControlBar>
           <Game
             dispatchGameState={dispatchGameState}
             gameState={gameState}
+            validityOpacity={validityOpacity}
           ></Game>
         </div>
       );

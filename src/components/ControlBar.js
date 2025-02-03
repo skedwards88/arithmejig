@@ -1,24 +1,11 @@
 import React from "react";
-import {handleInstall} from "../common/handleInstall";
 import {handleShare} from "../common/handleShare";
 
-// todo delete any unneeded controls
-function ControlBar({
-  dispatchGameState,
-  gameState,
-  setDisplay,
-  setInstallPromptEvent,
-  showInstallButton,
-  installPromptEvent,
-  dailyIsSolved,
-  appName,
-  shareText,
-  url,
-}) {
+function ControlBar({dispatchGameState, gameState, setDisplay, dailyIsSolved}) {
   return (
     <div id="controls">
       <button
-        id="newGameButton"
+        id="newGameIcon"
         className="controlButton"
         onClick={() => {
           dispatchGameState({
@@ -27,30 +14,17 @@ function ControlBar({
           });
         }}
       ></button>
+
       <button
-        id="helpButton"
+        id="hintIcon"
         className="controlButton"
         disabled={gameState.gameIsSolved}
         onClick={() => dispatchGameState({action: "getHint"})}
       ></button>
-      <button
-        id="settingsButton"
-        className="controlButton"
-        onClick={() => setDisplay("settings")}
-      ></button>
-      <button
-        id="rulesButton"
-        className="controlButton"
-        onClick={() => setDisplay("rules")}
-      ></button>
-      <button
-        id="heartButton"
-        className="controlButton"
-        onClick={() => setDisplay("heart")}
-      ></button>
+
       {dailyIsSolved ? (
         <button
-          id="calendarButtonSolved"
+          id="calendarIconSolved"
           className="controlButton"
           onClick={() => {
             dispatchGameState({action: "clearStreakIfNeeded"});
@@ -59,36 +33,39 @@ function ControlBar({
         ></button>
       ) : (
         <button
-          id="calendarButton"
+          id="calendarIcon"
           className="controlButton"
           onClick={() => setDisplay("daily")}
         ></button>
       )}
 
+      <button
+        id="customIcon"
+        className="controlButton"
+        onClick={() => setDisplay("custom")}
+      ></button>
+
       {navigator.canShare ? (
         <button
-          id="shareButton"
-          onClick={() => {
-            setDisplay("pause");
-            handleShare({appName, text: shareText, url});
-
-          }}
-        ></button>
-      ) : (
-        <></>
-      )}
-
-      {showInstallButton && installPromptEvent ? (
-        <button
-          id="installButton"
+          id="shareIcon"
           className="controlButton"
           onClick={() =>
-            handleInstall(installPromptEvent, setInstallPromptEvent)
+            handleShare({
+              appName: "Arithmejig",
+              text: "Check out this word game!",
+              url: "https://skedwards88.github.io/arithmejig",
+            })
           }
         ></button>
       ) : (
         <></>
       )}
+
+      <button
+        id="menuIcon"
+        className="controlButton"
+        onClick={() => setDisplay("extendedMenu")}
+      ></button>
     </div>
   );
 }

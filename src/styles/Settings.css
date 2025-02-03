@@ -1,3 +1,50 @@
+.settings {
+  text-align: center;
+  overflow: scroll;
+  font-size: calc(var(--default-font-size) * 0.75);
+  justify-items: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#settings {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.setting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  margin: 0.5cm;
+}
+
+.setting-description {
+  padding: 0 5px 0 0;
+  width: 60%;
+}
+
+.setting-info {
+  font-size: calc(var(--default-font-size) / 2);
+}
+
+#setting-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#setting-buttons > button {
+  margin: 10px;
+}
+
 /* Checkbox styling */
 input[type="checkbox" i] {
   all: unset;
@@ -60,7 +107,7 @@ input[type="range"]::-ms-thumb {
 
 /* Slider track */
 input[type="range"]::-webkit-slider-runnable-track {
-  height: 2vh;
+  height: calc(var(--default-font-size) * 0.5);
   cursor: pointer;
   background: var(--light-color);
   border-radius: 2px;
@@ -71,14 +118,14 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
 }
 
 input[type="range"]::-moz-range-track {
-  height: 2vh;
+  height: calc(var(--default-font-size) * 0.5);
   cursor: pointer;
   background: var(--light-color);
   border-radius: 2px;
 }
 
 input[type="range"]::-ms-track {
-  height: 2vh;
+  height: calc(var(--default-font-size) * 0.5);
   cursor: pointer;
   background: var(--light-color);
   border-radius: 2px;
@@ -100,48 +147,38 @@ input[type="range"]:focus::-ms-fill-upper {
   background: var(--light-color);
 }
 
-.settings {
-  text-align: center;
-  overflow: scroll;
-  font-size: calc(var(--default-font-size) * 0.75);
-  justify-items: center;
+#numLetters-info,
+#validityOpacity-info {
+  color: var(--light-color);
+  font-size: var(--default-font-size);
+  padding: 0 1vh;
+  justify-content: center;
   align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
 }
 
-#settings {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  width: 100%;
-  align-items: stretch;
-}
-
-.setting {
+#numLetters-container,
+#validityOpacity-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  text-align: left;
-  margin: 0.5cm;
+  justify-content: flex-end;
+  align-items: baseline;
 }
 
-.setting-description {
-  padding: 0 5px 0 0;
+#validity-example {
+  font-size: var(--default-font-size);
+  position: relative;
+  display: inline;
+
+  --validity-opacity: 0.15; /* This value is changed by the Settings component */
 }
 
-.setting-info {
-  font-size: calc(var(--default-font-size) / 2);
-}
-
-#setting-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+#validity-example::after {
+  position: absolute;
+  background-color: var(--light-color);
+  content: "";
+  height: calc(var(--default-font-size) / 8);
   width: 100%;
-}
-
-#setting-buttons > button {
-  margin: 10px;
+  top: 50%;
+  left: 0;
+  opacity: var(--validity-opacity);
 }
