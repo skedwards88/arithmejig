@@ -1,4 +1,5 @@
-function getRandom(pseudoRandomGenerator) { //todo import from logic pkg instead
+function getRandom(pseudoRandomGenerator) {
+  //todo import from logic pkg instead
   if (pseudoRandomGenerator) {
     return pseudoRandomGenerator();
   } else {
@@ -7,13 +8,15 @@ function getRandom(pseudoRandomGenerator) { //todo import from logic pkg instead
 }
 
 // return a random element from a given array
-function pickRandomItemFromArray(inputArray, pseudoRandomGenerator) {//todo import from logic pkg instead
+function pickRandomItemFromArray(inputArray, pseudoRandomGenerator) {
+  //todo import from logic pkg instead
   return inputArray[
     Math.floor(getRandom(pseudoRandomGenerator) * inputArray.length)
   ];
 }
 
-export function pickRandomIntBetween(int1, int2, pseudoRandomGenerator) {//todo import from logic pkg instead
+export function pickRandomIntBetween(int1, int2, pseudoRandomGenerator) {
+  //todo import from logic pkg instead
   const min = Math.min(int1, int2);
   const max = Math.max(int1, int2);
 
@@ -21,6 +24,7 @@ export function pickRandomIntBetween(int1, int2, pseudoRandomGenerator) {//todo 
   return Math.floor(min + getRandom(pseudoRandomGenerator) * (max + 1 - min));
 }
 
+// Random equation in the form [number][operator][number]
 export function generateRandomEquation(pseudoRandomGenerator) {
   const operators = ["+", "-", "*", "/"];
 
@@ -37,8 +41,12 @@ export function generateRandomEquation(pseudoRandomGenerator) {
     // For multiplication,  disallow 0 and 1
     operandA = pickRandomIntBetween(2, 9, pseudoRandomGenerator);
     operandB = pickRandomIntBetween(2, 9, pseudoRandomGenerator);
+  } else if (operator === "-") {
+    // For subtraction, disallow 0 and disallow negative solutions
+    operandA = pickRandomIntBetween(1, 9, pseudoRandomGenerator);
+    operandB = pickRandomIntBetween(0, operandA, pseudoRandomGenerator);
   } else {
-    // For addition and subtraction, disallow 0
+    // For addition, disallow 0
     operandA = pickRandomIntBetween(1, 9, pseudoRandomGenerator);
     operandB = pickRandomIntBetween(1, 9, pseudoRandomGenerator);
   }
@@ -51,14 +59,17 @@ export function generateRandomEquation(pseudoRandomGenerator) {
 }
 
 function getWholeDivisors(targetValue) {
-  const possibleDivisors = Array.from({ length: targetValue }, (_, i) => i + 1);
-  const wholeDivisors = possibleDivisors.filter(i => targetValue % i === 0)
-console.log(JSON.stringify(wholeDivisors));
-  return wholeDivisors
+  const possibleDivisors = Array.from({length: targetValue}, (_, i) => i + 1);
+  const wholeDivisors = possibleDivisors.filter((i) => targetValue % i === 0);
+  console.log(JSON.stringify(wholeDivisors));
+  return wholeDivisors;
 }
 
-
-export function generateRandomEquationOfValue(targetValue, pseudoRandomGenerator) {
+// Random equation that equals [targetValue] in the form [number][operator][number]
+export function generateRandomEquationOfValue(
+  targetValue,
+  pseudoRandomGenerator,
+) {
   const operators = ["*"];
 
   const operator = pickRandomItemFromArray(operators, pseudoRandomGenerator);
@@ -69,15 +80,15 @@ export function generateRandomEquationOfValue(targetValue, pseudoRandomGenerator
 
   if (operator === "+") {
     operandA = pickRandomIntBetween(1, targetValue, pseudoRandomGenerator);
-    operandB = targetValue - operandA
+    operandB = targetValue - operandA;
   } else if (operator === "-") {
     operandB = pickRandomIntBetween(1, targetValue, pseudoRandomGenerator);
-    operandA = operandB + targetValue
+    operandA = operandB + targetValue;
   } else if (operator === "/") {
     operandB = pickRandomIntBetween(2, 9, pseudoRandomGenerator);
-    operandA = targetValue * operandB
+    operandA = targetValue * operandB;
   } else if (operator === "*") {
-    const wholeDivisors = getWholeDivisors(targetValue);//todo later can exclude 1 and target unless they are the only divisor
+    const wholeDivisors = getWholeDivisors(targetValue); //todo later can exclude 1 and target unless they are the only divisor
     operandA = pickRandomItemFromArray(wholeDivisors, pseudoRandomGenerator);
     operandB = targetValue / operandA;
   }
