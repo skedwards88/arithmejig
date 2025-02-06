@@ -32,8 +32,6 @@ module.exports = (env, argv) => {
     // This skips the service worker waiting phase, meaning the service worker activates as soon as it's finished installing
     skipWaiting: true,
     cacheId: `arithmejig-app-name-${packageJson.version}`,
-    // special case to cache word list for offline play
-    maximumFileSizeToCacheInBytes: 4200000,
   });
 
   const plugins =
@@ -68,12 +66,6 @@ module.exports = (env, argv) => {
       filename: "bundle.[fullhash].js",
       path: path.resolve(__dirname, "dist"),
       clean: true, // removes unused files from output dir
-    },
-    performance: {
-      // special case to cache word list for offline play
-      maxEntrypointSize: 2700000, // bytes
-      // special case to cache word list for offline play
-      maxAssetSize: 2700000, // bytes
     },
     devServer: {
       static: "./dist",

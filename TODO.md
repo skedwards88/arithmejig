@@ -3,6 +3,7 @@
 
 - remove word_list imports
 - remove/rename word/letter logic
+- allow to control operators used under settings
 
 - replace the favicons
 - reenable the deploy workflow

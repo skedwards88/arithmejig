@@ -4,6 +4,10 @@ export default function Heart({setDisplay, repoName}) {
   return (
     <div className="App info">
       <div className="infoText">
+        {/* todo remove this */}
+        <p><b>Thanks for play testing! Expect some bugs or missing features while this game is in development.</b></p>
+        <p>~~~</p>
+
         {"Feedback? "}
         <a
           href={`https://github.com/skedwards88/${repoName}/issues/new/choose`}
@@ -11,14 +15,6 @@ export default function Heart({setDisplay, repoName}) {
           Open an issue
         </a>
         {" on GitHub or email SECTgames@gmail.com."}
-        {`\n\n`}
-        {<hr></hr>}
-        {`\n`}
-        {`Thanks to the word frequency data sources attributed in `}
-        <a href="https://github.com/skedwards88/word_lists">
-          skedwards88/word_lists
-        </a>
-        {`.`}
         {`\n\n`}
         {<hr></hr>}
         {`\n`}

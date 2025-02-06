@@ -6,6 +6,7 @@ export default function MoreGames({setDisplay}) {
   // - add a png screenshot under images/moreGames
   // - to preview locally, run `npm run compressImages` to generate a webp version of the png (this will also be done during deployment)
   // - reference the webp screenshot in src/styles/MoreGames.css
+  // todo add crossjig image+link
   const games = {
     lexlet: "https://lexlet.com",
     blobble: "https://skedwards88.github.io/blobble/",
@@ -23,10 +24,11 @@ export default function MoreGames({setDisplay}) {
       aria-label={`Screenshot of the ${game} game.`}
     ></a>
   ));
-
   return (
     <div className="App info">
       <div className="infoText">
+        <p>Like this game? Check out the word version: <a href="https://crossjig.com">Crossjig</a></p>
+
         {`Want more games? Check these out, or see all of our puzzle games `}
         <a href="https://skedwards88.github.io/">here</a>
         {`. `}

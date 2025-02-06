@@ -52,7 +52,7 @@ function ControlBar({dispatchGameState, gameState, setDisplay, dailyIsSolved}) {
           onClick={() =>
             handleShare({
               appName: "Arithmejig",
-              text: "Check out this word game!",
+              text: "Check out this math puzzle!",
               url: "https://skedwards88.github.io/arithmejig",
             })
           }

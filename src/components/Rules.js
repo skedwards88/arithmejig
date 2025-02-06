@@ -6,9 +6,13 @@ export default function Rules({setDisplay, setHasSeenWhatsNew}) {
     <div className="App rules">
       <h1 id="rulesHeader">Arithmejig: How to play</h1>
       <div id="rulesText">
+        {/* todo remove this */}
+        <p><b>Thanks for play testing! Expect some bugs or missing features while this game is in development.</b></p>
+        <p>~~~</p>
+
         <p>
-          <b>Drag</b> the pieces to the board to make words vertically and
-          horizontally. All words must connect.
+          <b>Drag</b> the pieces to the board to make equations vertically and
+          horizontally. All equations must connect.
         </p>
         <p>
           <b>Drag a blank space</b> to move the whole puzzle.

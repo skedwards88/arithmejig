@@ -32,7 +32,7 @@ export default function ExtendedMenu({
           onClick={() =>
             handleShare({
               appName: "Arithmejig",
-              text: "Check out this word game!",
+              text: "Check out this math puzzle!",
               url: "https://skedwards88.github.io/arithmejig",
             })
           }

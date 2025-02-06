@@ -50,7 +50,7 @@ export default function Settings({
         <div className="setting">
           <div className="setting-description">
             <label htmlFor="validityOpacity">Validity indication</label>
-            <div className="setting-info">{`Valid words are indicated with a strikethrough. This controls the brightness of the strikethrough.`}</div>
+            <div className="setting-info">{`Valid equations are indicated with a strikethrough. This controls the brightness of the strikethrough.`}</div>
             <div
               id="validity-example"
               style={{"--validity-opacity": originalValidityOpacity}}
