@@ -1,12 +1,6 @@
 import getPatternsForRow from "./getRegexForRow.js";
 import {shuffleArray, transposeGrid} from "@skedwards88/word_logic";
-import {
-  commonWordsLen4,
-  commonWordsLen5,
-  commonWordsLen6,
-  commonWordsLen7,
-} from "@skedwards88/word_lists";
-import { generateRandomEquation } from "./generateRandomEquation.js";
+import {allEquations} from "./allEquations.js";
 
 function removeWordThatMatches(pattern, wordList) {
   // Given a patten and a list of words, finds a word that matches the pattern
@@ -28,50 +22,13 @@ function removeWordThatMatches(pattern, wordList) {
   }
 }
 
-
-
-export function generateGridNew({gridSize, pseudoRandomGenerator}) {
-  let symbolCount = 0;
-  let orientationIsRows = true;
-  let grid = Array.from({length: gridSize}, () =>
-    Array.from({length: gridSize}, () => ""),
-  );;
-
-  // Initialize the grid with a random equation at a random position
-  const startingEquation = generateRandomEquation(pseudoRandomGenerator);
-  symbolCount = startingEquation.length;
-  const startingRowIndex = Math.floor(pseudoRandomGenerator() * gridSize);
-  const startingColIndex = Math.floor(
-    pseudoRandomGenerator() * (gridSize - startingEquation.length),
-  );
-  for (
-    let index = startingColIndex;
-    index < startingColIndex + startingEquation.length;
-    index++
-  ) {
-    grid[startingRowIndex][index] = startingEquation[index - startingColIndex];
-  }
-
-  // transpose the grid to start searching in the opposite orientation
-  grid = transposeGrid(grid);
-  orientationIsRows = !orientationIsRows;
-}
-
 export function generateGrid({gridSize, minLetters, pseudoRandomGenerator}) {
   // Generates an interconnected grid of words
   // that fits within the specified gridSize.
   // The total number of letters used will be minLetters or slightly higher.
 
-  const minWordLength = 4;
-  let wordList = shuffleArray(
-    [
-      ...commonWordsLen4,
-      ...commonWordsLen5,
-      ...commonWordsLen6,
-      ...commonWordsLen7,
-    ],
-    pseudoRandomGenerator,
-  );
+  const minWordLength = 6; // todo this number is 1 lower than actual...somewhere there is an off by 1 error
+  let wordList = shuffleArray(allEquations, pseudoRandomGenerator);
 
   let letterCount = 0;
   let grid;

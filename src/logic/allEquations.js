@@ -4,8 +4,8 @@ function generateAllEquations() {
   let expressionsByValue = {};
 
   for (const operator of operators) {
-    for (let operandA = 0; operandA <= 9; operandA++) {
-      for (let operandB = 0; operandB <= 9; operandB++) {
+    for (let operandA = 1; operandA <= 9; operandA++) {
+      for (let operandB = 1; operandB <= 9; operandB++) {
         const equation = `${operandA}${operator}${operandB}`;
         const value = eval(equation);
 
@@ -37,6 +37,8 @@ function generateAllEquations() {
       }
     }
   }
+
+  return allEquations;
 }
 
 export const allEquations = generateAllEquations();

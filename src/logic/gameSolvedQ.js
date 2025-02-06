@@ -5,7 +5,8 @@ function piecesOverlapQ(boardPieces, gridSize) {
     JSON.stringify(Array(gridSize).fill(Array(gridSize).fill(""))),
   );
 
-  for (let index = 0; index < boardPieces.length; index++) {//todo rename letter var/prop name
+  for (let index = 0; index < boardPieces.length; index++) {
+    //todo rename letter var/prop name
     const letters = boardPieces[index].letters;
     let top = boardPieces[index].boardTop;
     for (let rowIndex = 0; rowIndex < letters.length; rowIndex++) {
@@ -29,7 +30,7 @@ function piecesOverlapQ(boardPieces, gridSize) {
       break;
     }
   }
-  return {piecesOverlap: overlappingPiecesQ, grid: grid};//todo don't need to return grid here anymore
+  return {piecesOverlap: overlappingPiecesQ, grid: grid}; //todo don't need to return grid here anymore
 }
 
 export function gameSolvedQ(pieces, gridSize) {
@@ -45,7 +46,7 @@ export function gameSolvedQ(pieces, gridSize) {
     };
   }
 
-  const {gameIsSolved, reason} = {gameIsSolved:false, reason:"todo"};//todo implement this
+  const {gameIsSolved, reason} = {gameIsSolved: false, reason: "todo"}; //todo implement this
 
   return {
     gameIsSolved: gameIsSolved,

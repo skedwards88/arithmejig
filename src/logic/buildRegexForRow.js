@@ -16,7 +16,7 @@ export function buildRegexForRow(row) {
   ) {
     const value = row[currentIndex];
     if (value === "") {
-      regexComponents.push(".{1}");
+      regexComponents.push(".");
     } else if (
       (value === "+") |
       (value === "/") |

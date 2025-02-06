@@ -11,7 +11,7 @@ export default function getPatternsForRow(grid, rowIndex, minLength) {
     startPosition++
   ) {
     // If the previous element was a letter, skip
-    if (row[startPosition - 1]?.match("^[A-Za-z]$")) {
+    if (row[startPosition - 1]?.match("^.$")) {
       continue;
     }
     let pattern = "";
@@ -22,24 +22,39 @@ export default function getPatternsForRow(grid, rowIndex, minLength) {
       currentPosition++
     ) {
       if (
-        !row[currentPosition].match("^[A-Z]$") &&
+        !row[currentPosition].match("^.$") &&
         grid?.[rowIndex - 1]?.[currentPosition]
       ) {
         break;
       }
       if (
-        !row[currentPosition].match("^[A-Z]$") &&
+        !row[currentPosition].match("^.$") &&
         grid?.[rowIndex + 1]?.[currentPosition]
       ) {
         break;
       }
       // Add the element to the pattern
-      const element = row[currentPosition].match("^[A-Z]$")
-        ? row[currentPosition]
-        : "[A-Z]";
-      pattern += element;
+      if (row[currentPosition] === "") {
+        pattern += ".";
+      } else if (
+        (row[currentPosition] === "+") |
+        (row[currentPosition] === "/") |
+        (row[currentPosition] === "-") |
+        (row[currentPosition] === "*") |
+        (row[currentPosition] === "=")
+      ) {
+        // todo see if cleaner way to catch and handle escaping
+        pattern += `\\${row[currentPosition]}`;
+      } else {
+        pattern += row[currentPosition];
+      }
 
-      if (row[currentPosition].match("^[A-Z]$")) {
+      // const element = row[currentPosition].match("^.$")
+      //   ? row[currentPosition]
+      //   : ".";
+      // pattern += element;
+
+      if (row[currentPosition].match("^.$")) {
         includesLetter = true;
       }
 
@@ -52,7 +67,7 @@ export default function getPatternsForRow(grid, rowIndex, minLength) {
             // less than minLength
             currentPosition - startPosition < minLength ||
             // the next element is a letter
-            row[currentPosition + 1]?.match("^[A-Z]$")
+            row[currentPosition + 1]?.match("^.$")
           )
         )
       ) {

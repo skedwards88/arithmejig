@@ -118,7 +118,7 @@ export default function App() {
       solution: false,
     });
 
-    const {gameIsSolved, reason} = {gameIsSolved: false, reason:"todo"} // todo implement this logic
+    const {gameIsSolved, reason} = {gameIsSolved: false, reason: "todo"}; // todo implement this logic
 
     // If the board is not valid, display a message with errors
     if (!gameIsSolved) {

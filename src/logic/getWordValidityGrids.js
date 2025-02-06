@@ -25,7 +25,7 @@ function getHorizontalValidityGrid({grid, originalWords}) {
           // Otherwise, check whether it is a word.
           let isWord = originalWords.includes(word);
           if (!isWord) {
-            ({isWord} = {isWord: true});// todo implement actual logic
+            ({isWord} = {isWord: true}); // todo implement actual logic
           }
           if (isWord) {
             indexes.forEach(
@@ -43,7 +43,7 @@ function getHorizontalValidityGrid({grid, originalWords}) {
       // Otherwise, check whether it is a word.
       let isWord = originalWords.includes(word);
       if (!isWord) {
-        ({isWord} = {isWord: true});// todo implement actual logic
+        ({isWord} = {isWord: true}); // todo implement actual logic
       }
       if (isWord) {
         indexes.forEach(

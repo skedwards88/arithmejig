@@ -7,7 +7,7 @@ import {updatePieceDatum} from "./assemblePiece";
 export function generatePuzzle({gridSize, minLetters, seed}) {
   let count = 0;
   let foundPuzzleWithAcceptableSingletons = false;
-  const maxFractionSingles = 0.1;
+  const maxFractionSingles = 0.1; // todo seem to never be hitting this target at least with ~30-35 letters. look into this.
 
   // Create a new seedable random number generator
   let pseudoRandomGenerator = seed ? seedrandom(seed) : seedrandom();
