@@ -5,7 +5,12 @@ export default function Heart({setDisplay, repoName}) {
     <div className="App info">
       <div className="infoText">
         {/* todo remove this */}
-        <p><b>Thanks for play testing! Expect some bugs or missing features while this game is in development.</b></p>
+        <p>
+          <b>
+            Thanks for play testing! Expect some bugs or missing features while
+            this game is in development.
+          </b>
+        </p>
         <p>~~~</p>
 
         {"Feedback? "}

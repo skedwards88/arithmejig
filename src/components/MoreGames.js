@@ -27,7 +27,10 @@ export default function MoreGames({setDisplay}) {
   return (
     <div className="App info">
       <div className="infoText">
-        <p>Like this game? Check out the word version: <a href="https://crossjig.com">Crossjig</a></p>
+        <p>
+          Like this game? Check out the word version:{" "}
+          <a href="https://crossjig.com">Crossjig</a>
+        </p>
 
         {`Want more games? Check these out, or see all of our puzzle games `}
         <a href="https://skedwards88.github.io/">here</a>

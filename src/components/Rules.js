@@ -7,7 +7,12 @@ export default function Rules({setDisplay, setHasSeenWhatsNew}) {
       <h1 id="rulesHeader">Arithmejig: How to play</h1>
       <div id="rulesText">
         {/* todo remove this */}
-        <p><b>Thanks for play testing! Expect some bugs or missing features while this game is in development.</b></p>
+        <p>
+          <b>
+            Thanks for play testing! Expect some bugs or missing features while
+            this game is in development.
+          </b>
+        </p>
         <p>~~~</p>
 
         <p>
