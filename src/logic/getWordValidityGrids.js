@@ -1,7 +1,8 @@
 import {getGridFromPieces} from "../logic/getGridFromPieces";
 import {transposeGrid} from "@skedwards88/word_logic";
+import {evaluate} from "mathjs";
 
-function getHorizontalValidityGrid({grid, originalWords}) {
+function getHorizontalValidityGrid({grid}) {
   // return a 2D array of bools indicating whether
   // the position corresponds to a letter on the board
   // that is part of a valid horizontal word
@@ -21,12 +22,29 @@ function getHorizontalValidityGrid({grid, originalWords}) {
         indexes.push(columnIndex);
       } else {
         if (word.length > 1) {
-          // If the word is one of the original words, always consider it valid (in case we updated the dictionary in the interim).
           // Otherwise, check whether it is a word.
-          let isWord = originalWords.includes(word);
-          if (!isWord) {
-            ({isWord} = {isWord: true}); // todo implement actual logic
+          let isWord;
+          if (!word.includes("=")) {
+            isWord = false;
+          } else {
+            const expressions = word.split("=");
+
+            try {
+              const values = expressions.map((expression) =>
+                evaluate(expression),
+              );
+              if (values.includes(undefined)) {
+                isWord = false;
+              } else if (!values.every((value) => value === values[0])) {
+                isWord = false;
+              } else {
+                isWord = true;
+              }
+            } catch (error) {
+              isWord = false;
+            }
           }
+
           if (isWord) {
             indexes.forEach(
               (index) => (horizontalValidityGrid[rowIndex][index] = true),
@@ -41,7 +59,7 @@ function getHorizontalValidityGrid({grid, originalWords}) {
     if (word.length > 1) {
       // If the word is one of the original words, always consider it valid (in case we updated the dictionary in the interim).
       // Otherwise, check whether it is a word.
-      let isWord = originalWords.includes(word);
+      let isWord;
       if (!isWord) {
         ({isWord} = {isWord: true}); // todo implement actual logic
       }
@@ -56,24 +74,16 @@ function getHorizontalValidityGrid({grid, originalWords}) {
   return horizontalValidityGrid;
 }
 
-export function getWordValidityGrids({
-  pieces,
-  gridSize,
-  // includeOriginalSolution = true, todo no longer need to pass this
-}) {
-  const originalWords = [];
-
+export function getWordValidityGrids({pieces, gridSize}) {
   const grid = getGridFromPieces({pieces, gridSize, solution: false});
 
   const horizontalValidityGrid = getHorizontalValidityGrid({
     grid,
-    originalWords,
   });
 
   const transposedGrid = transposeGrid(grid);
   const horizontalTransposedValidityGrid = getHorizontalValidityGrid({
     grid: transposedGrid,
-    originalWords,
   });
   const verticalValidityGrid = transposeGrid(horizontalTransposedValidityGrid);
 
