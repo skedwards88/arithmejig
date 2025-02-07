@@ -55,7 +55,7 @@ export default function Settings({
               id="validity-example"
               style={{"--validity-opacity": originalValidityOpacity}}
             >
-              EXAMPLE
+              2+4=8-2
             </div>
           </div>
           <div id="validityOpacity-container">
