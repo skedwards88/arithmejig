@@ -12,6 +12,28 @@
   "theme_color": "#373647",
   "shortcuts": [],
   "categories": ["games", "puzzle", "math", "entertainment", "education"],
-  "icons": [],
+  "icons": [
+      {
+        "src": "favicon.svg",
+        "type": "image/svg+xml",
+        "sizes": "any"
+      },
+      {
+        "src": "icon_192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "icon_512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      },
+      {
+        "src": "maskable_icon_512.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable"
+      }
+    ],
   "screenshots": []
 }
