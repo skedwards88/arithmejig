@@ -1,30 +1,24 @@
 
 ## For first deploy
 
-- remove word_list imports
 - remove/rename word/letter logic
-- allow to control operators used under settings
+- allow to control operators and digits used under settings
 
-- replace the favicons
-- reenable the deploy workflow
-- in the GitHub Pages settings, specify that GitHub Pages is built from GitHub Actions
 - Add link etc to readme
 - Add link to repo home
 - what's new remove?
 - update rules
 - xlink between crossjig and this game
+- remove construction notice from readme, rules, info
 
 ## `src/images`
 
-- [ ] Add an svg favicon and reflect it in:
-  - [ ] `index.html`
-  - [ ] `manifest.json`
-  - [ ] `webpack.config.js`
 - [ ] Delete unneeded icons
 - [ ] Add a maskable icon, screenshots, and PNG icons and reflect them in:
   - [ ] `index.html`
   - [ ] `manifest.json`
   - [ ] `webpack.config.js`
+- [ ] remove src/images/screenshots/temp-screenshot.png and update places that use it
 
 ## PWA
 
