@@ -2,10 +2,11 @@
   "name": "Arithmejig",
   "short_name": "Arithmejig",
   "description": "A math-based jigsaw puzzle",
-  "id": "?arithmejig=202402221",
+  "id": "?arithmejig=20250208",
   "dir": "auto",
   "lang": "en-US",
   "display": "standalone",
+  "orientation": "portrait",
   "start_url": "https://skedwards88.github.io/arithmejig/",
   "scope": "/arithmejig/",
   "background_color": "#373647",
@@ -16,17 +17,20 @@
       {
         "src": "favicon.svg",
         "type": "image/svg+xml",
-        "sizes": "any"
+        "sizes": "any",
+        "purpose": "any"
       },
       {
         "src": "icon_192.png",
         "type": "image/png",
-        "sizes": "192x192"
+        "sizes": "192x192",
+        "purpose": "any"
       },
       {
         "src": "icon_512.png",
         "type": "image/png",
-        "sizes": "512x512"
+        "sizes": "512x512",
+        "purpose": "any"
       },
       {
         "src": "maskable_icon_512.png",
