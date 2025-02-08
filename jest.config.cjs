@@ -4,6 +4,6 @@ module.exports = {
   },
   // ignore all node modules except @skedwards88/word_logic
   transformIgnorePatterns: [
-    "/node_modules/(?!@skedwards88/word_lists|@skedwards88/word_logic)",
+    "/node_modules/(?!@skedwards88/word_logic)",
   ],
 };
