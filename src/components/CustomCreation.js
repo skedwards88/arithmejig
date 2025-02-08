@@ -4,6 +4,8 @@ import Board from "./Board";
 import DragGroup from "./DragGroup";
 
 function CustomCreation({dispatchCustomState, customState, validityOpacity}) {
+  return <div className="App info">Custom puzzle creation coming soon!</div>
+  // todo readd this
   // dragCount ensures a different key each time, so a fresh DragGroup is mounted even if there's
   // no render between one drag ending and the next one starting.
   const dragGroup = customState.dragState ? (
