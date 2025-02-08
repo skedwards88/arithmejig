@@ -8,14 +8,13 @@ A math-based jigsaw puzzle.
 
 **Time:** 5 minutes
 
-<!-- TODO uncomment the stuff below -->
-<!-- [Play Now!](https://skedwards88.github.io/arithmejig) -->
+[Play Now!](https://skedwards88.github.io/arithmejig)
 
-<!-- <img src="src/images/screenshots/temp_screenshot.png" alt="game screenshot" width="200"/>
+<img src="src/images/screenshots/temp-screenshot.png" alt="game screenshot" width="200"/>
 
-Do you have feedback or ideas for improvement? [Open an issue](https://github.com/skedwards88/arithmejig/issues/new). -->
+Do you have feedback or ideas for improvement? [Open an issue](https://github.com/skedwards88/arithmejig/issues/new).
 
-Want more games? Visit [SECT Games](https://skedwards88.github.io/).
+Want the word version of this game? Check out [Crossjig](https://crossjig.com). Want more games? Visit [SECT Games](https://skedwards88.github.io/).
 
 ## Development
 
