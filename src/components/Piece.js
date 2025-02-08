@@ -49,7 +49,7 @@ function Letter({
         event.preventDefault();
       }}
     >
-      {letter}
+      {letter.replace("/", "÷").replace("*", "×")}
     </div>
   );
 }
