@@ -11,7 +11,8 @@
     "eslint": "npx eslint --ignore-path .gitignore . --fix",
     "prettier": "npx prettier --write .",
     "style": "npx stylelint '**/*.css' --fix",
-    "lint": "npm run eslint && npm run prettier && npm run style"
+    "lint": "npm run eslint && npm run prettier && npm run style",
+    "compressImages": "./compressImages.sh"
   },
   "repository": {
     "type": "git",

@@ -6,8 +6,8 @@ export default function MoreGames({setDisplay}) {
   // - add a png screenshot under images/moreGames
   // - to preview locally, run `npm run compressImages` to generate a webp version of the png (this will also be done during deployment)
   // - reference the webp screenshot in src/styles/MoreGames.css
-  // todo add crossjig image+link
   const games = {
+    crossjig: "https://crossjig.com",
     lexlet: "https://lexlet.com",
     blobble: "https://skedwards88.github.io/blobble/",
     wordfall: "https://skedwards88.github.io/wordfall/",
